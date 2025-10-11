@@ -24,6 +24,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "node_modules/@expo-google-fonts/open-sans/400Regular/OpenSans_400Regular.ttf", 
+            "node_modules/@expo-google-fonts/open-sans/400Regular_Italic/OpenSans_400Regular_Italic.ttf", 
+            "node_modules/@expo-google-fonts/open-sans/700Bold/OpenSans_700Bold.ttf"
+          ]
+        }
+      ]
+    ]
   }
 }
