@@ -5,7 +5,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 {/* Stylesheet */}
 import Style from '../styles/Style.js';
 
-export default function Login() {
+export default function Login({route, navigation}) {
+
+    const loginUser = () => {
+        navigation.navigate('Manager Dashboard');
+    };
+
     return (
         <SafeAreaView style={[Style.center, Style.loginBackground]}>
             <ScrollView contentContainerStyle={Style.center}>
@@ -24,7 +29,7 @@ export default function Login() {
                 <View style={[Style.loginFormBox, Style.topCenter]}>
                     <TextInput style={[Style.loginInput, Style.regularText]} placeholder='Username'></TextInput>
                     <TextInput style={[Style.loginInput, Style.regularText]} placeholder='Password'></TextInput>
-                    <TouchableOpacity style={[Style.loginButton]}>
+                    <TouchableOpacity style={[Style.loginButton]} onPress={loginUser}>
                         <Text style={[Style.loginButtonText, Style.boldText]}>Login</Text>
                     </TouchableOpacity>
                 </View>
