@@ -21,6 +21,11 @@ const cButtonBackground = lightBlue;
 const cTabHeaderBackground = lightBlue;
 const cTabHeaderBorder = gold;
 const cAuthHeaderBackground = darkBlue;
+const cListHeader = darkGrey;
+const cActionViewBackground = lightBlue;
+const cActionEditBackground = gold;
+const cActionDeleteBackground = danger;
+const cActionAddBackground = darkGrey;
 //#endregion
 
 export default StyleSheet.create({
@@ -46,6 +51,16 @@ export default StyleSheet.create({
     },
     boldText: {
         fontFamily: 'OpenSans_700Bold',
+    },
+    pageContent: {
+        flex: 1,
+        width: wp('100%'),
+        backgroundColor: white,
+        gap: 8,
+        padding: 10,
+    },
+    scrollView: {
+        backgroundColor: white,
     },
     //#endregion
     //#region Login
@@ -146,6 +161,93 @@ export default StyleSheet.create({
     },
     authLogoutText: {
         color: black,
+        fontSize: 16,
+    },
+    //#endregion
+    //#region Lists
+    listHeader: {
+        borderBottomWidth: 1,
+        borderColor: cListHeader,
+    },
+    listHeaderText: {
+        fontSize: 16,
+        color: cListHeader,
+    },
+    listBox: {
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    listActions: {
+        flexDirection: 'row',
+        gap: 8,
+    },
+    actionButton: {
+        padding: 4,
+        paddingTop: 3,
+        paddingBottom: 2, 
+        borderRadius: 5,
+    },
+    actionView: {
+        backgroundColor: cActionViewBackground,
+    },
+    actionEdit: {
+        backgroundColor: cActionEditBackground,
+    },
+    actionDelete: {
+        backgroundColor: cActionDeleteBackground,
+    },
+    listAddBox: {
+        padding: 8,
+    },
+    listAdd: {
+        backgroundColor: cActionAddBackground,
+        flexDirection: 'row',
+        gap: 10,
+        padding: 4,
+        borderRadius: 5,
+    },
+    listAddText: {
+        color: white,
+        fontSize: 16,
+    },
+    //#endregion
+    //#region Item
+    itemContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: cListHeader,
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+    itemDetails: {
+        flexDirection: 'row',
+        gap: 8,
+    },
+    itemImageBox: {
+        overflow: 'hidden',
+        width: 64,
+        height: 64,
+        borderRadius: 5,
+    },
+    itemImage: {
+        width: 64,
+        height: 64,
+        borderRadius: 5,
+    },
+    itemInfo: {
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    itemText: {
+        fontSize: 16,
+    },
+    itemCategoryText: {
+        color: darkGrey,
+    },
+    categoryText: {
         fontSize: 16,
     },
     //#endregion
