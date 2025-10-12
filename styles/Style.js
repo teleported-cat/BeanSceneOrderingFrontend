@@ -20,6 +20,7 @@ const cTextInputBorder = lightBlue;
 const cButtonBackground = lightBlue;
 const cTabHeaderBackground = lightBlue;
 const cTabHeaderBorder = gold;
+const cAuthHeaderBackground = darkBlue;
 //#endregion
 
 export default StyleSheet.create({
@@ -120,6 +121,32 @@ export default StyleSheet.create({
         color: white,
         marginLeft: 16,
         marginRight: 16,
+    },
+    //#endregion
+    //#region Auth
+    authHeader: {
+        flexDirection: 'row',
+        width: wp('100%'),
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: cAuthHeaderBackground,
+    },
+    authText: {
+        color: white,
+        fontSize: 16,
+    },
+    authLogout: {
+        backgroundColor: white,
+        padding: 5,
+        borderRadius: 5,
+        flexDirection: 'row',
+        gap: 3,
+        alignItems: 'center',
+    },
+    authLogoutText: {
+        color: black,
+        fontSize: 16,
     },
     //#endregion
 });
