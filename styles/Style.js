@@ -18,6 +18,8 @@ const danger = '#FF3030';
 const cLoginBackground = darkBlue;
 const cTextInputBorder = lightBlue;
 const cButtonBackground = lightBlue;
+const cTabHeaderBackground = lightBlue;
+const cTabHeaderBorder = gold;
 //#endregion
 
 export default StyleSheet.create({
@@ -92,6 +94,32 @@ export default StyleSheet.create({
         fontSize: 24,
         color: white,
         textAlign: 'center',
+    },
+    //#endregion
+    //#region Tab Bar
+    tabBar: {
+        //height: hp("9%"),
+        height: 60,
+    },
+    tabBarLabel: {
+        fontSize: 16,
+    },
+    tabHeader: {
+        backgroundColor: cTabHeaderBackground,
+        borderBottomColor: cTabHeaderBorder,
+        height: 56,
+    },
+    tabHeaderLeftText: {
+        fontSize: 18,
+        fontWeight: 500,
+        color: white,
+    },
+    tabHeaderRightText: {
+        fontSize: 18,
+        fontWeight: 500,
+        color: white,
+        marginLeft: 16,
+        marginRight: 16,
     },
     //#endregion
 });

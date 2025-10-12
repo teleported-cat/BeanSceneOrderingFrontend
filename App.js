@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts, OpenSans_400Regular, OpenSans_400Regular_Italic, OpenSans_700Bold } from '@expo-google-fonts/open-sans';
+import { Ionicons } from '@expo/vector-icons';
 
 {/* Navigation */}
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -40,7 +41,79 @@ import StaffSearch from './screens/Search/StaffSearch.js';
 import Style from './styles/Style.js';
 
 {/* Tab Navigation */}
+function ManagerDashboard() {
+  return (
+    <Tab.Navigator
+      screenOptions = {({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
+          if (route.name === 'Items') {
+            iconName = 'cart-outline';
+          } else if (route.name === 'Staff') {
+            iconName = 'person-outline';
+          } else if (route.name === 'Orders') {
+            iconName = 'receipt-outline';
+          } else if (route.name === 'Reports') {
+            iconName = 'bar-chart-outline';
+          } else if (route.name === 'Search') {
+            iconName = 'search-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#4AA1B5',
+        tabBarInactiveTintColor: '#808080',
+        tabBarStyle: [Style.tabBar],
+        tabBarLabelStyle: [Style.tabBarLabel, Style.regularText],
+        tabBarLabelPosition: 'below-icon',
+        headerRight: () => (
+          <Text style={[Style.tabHeaderRightText, Style.regularText]}>Bean Scene</Text>
+        ),
+        headerTitleStyle: [Style.tabHeaderLeftText, Style.regularText],
+        headerStyle: Style.tabHeader,
+      })}
+    >
+      <Tab.Screen name='Items' component={ItemNavigator} />
+      <Tab.Screen name='Staff' component={StaffNavigator} />
+      <Tab.Screen name='Orders' component={OrderNavigator} />
+      <Tab.Screen name='Reports' component={Reports} />
+      <Tab.Screen name='Search' component={ManagerSearchNavigator} />
+    </Tab.Navigator>
+  );
+}
+
+function StaffDashboard() {
+  return (
+    <Tab.Navigator
+      screenOptions = {({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Orders') {
+            iconName = 'receipt-outline';
+          } else if (route.name === 'Search') {
+            iconName = 'search-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#4AA1B5',
+        tabBarInactiveTintColor: '#808080',
+        tabBarStyle: [Style.tabBar],
+        tabBarLabelStyle: [Style.tabBarLabel],
+        headerRight: () => (
+          <Text style={[Style.tabHeaderRightText, Style.regularText]}>Bean Scene</Text>
+        ),
+        headerTitleStyle: Style.tabHeaderLeftText,
+        headerStyle: Style.tabHeader,
+      })}
+    >
+      <Tab.Screen name='Orders' component={OrderNavigator} />
+      <Tab.Screen name='Search' component={StaffSearchNavigator} />
+    </Tab.Navigator>
+  );
+}
 
 {/* Stack Navigation */}
 function ItemNavigator() {
@@ -140,17 +213,18 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <Login/>
-
+      <NavigationContainer>
+        <Stack.Navigator
+          initalRouteName='Login' 
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name='Login' component={Login} />
+          <Stack.Screen name='Manager Dashboard' component={ManagerDashboard} />
+          <Stack.Screen name='Staff Dashboard' component={StaffDashboard} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
