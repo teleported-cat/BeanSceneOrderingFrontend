@@ -26,6 +26,7 @@ const cActionViewBackground = lightBlue;
 const cActionEditBackground = gold;
 const cActionDeleteBackground = danger;
 const cActionAddBackground = darkGrey;
+const cBackButtonBackground = darkGrey;
 //#endregion
 
 export default StyleSheet.create({
@@ -52,32 +53,42 @@ export default StyleSheet.create({
     boldText: {
         fontFamily: 'OpenSans_700Bold',
     },
+    scrollView: {
+        width: '100%',
+        
+    },
     pageContent: {
         flex: 1,
-        width: wp('100%'),
+        width: '100%',
         backgroundColor: white,
         gap: 8,
         padding: 10,
     },
-    scrollView: {
+    background: {
         backgroundColor: white,
+        width: '100%',
+        alignItems: 'stretch',
     },
     //#endregion
     //#region Login
     loginBackground: {
         backgroundColor: cLoginBackground,
+        width: '100%',
+        alignItems: 'stretch',
     },
     loginLogoBox: {
         gap: 10,
+        width: '100%',
     },
     loginImage: {
-        width: wp('100%'),
+        width: '100%',
         maxWidth: 412,
         maxHeight: 149,
     },
     loginTitle: {
         fontSize: 32,
         color: white,
+        textAlign: 'center',
     },
     loginMessageBox: {
         paddingBottom: 10,
@@ -85,13 +96,14 @@ export default StyleSheet.create({
     loginMessageText: {
         color: danger,
         fontSize: 24,
+        textAlign: 'center',
     },
     loginFormBox: {
-        width: wp('80%'),
+        width: '80%',
         gap: 12,
     },
     loginInput: {
-        width: wp('80%'),
+        width: '100%',
         backgroundColor: white,
         borderColor: cTextInputBorder,
         borderWidth: 3,
@@ -101,7 +113,7 @@ export default StyleSheet.create({
         color: darkGrey,
     },
     loginButton: {
-        width: wp('80%'),
+        width: '100%',
         backgroundColor: cButtonBackground,
         padding: 10,
         borderRadius: 5,
@@ -141,7 +153,7 @@ export default StyleSheet.create({
     //#region Auth
     authHeader: {
         flexDirection: 'row',
-        width: wp('100%'),
+        width: '100%',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10,

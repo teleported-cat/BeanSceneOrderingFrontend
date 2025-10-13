@@ -135,10 +135,10 @@ export default function ItemList({props, navigation}) {
     }, [props, isFocused])
 
     return(
-        <SafeAreaView style={[Style.center, Style.scrollView]}>
+        <SafeAreaView style={[Style.center, Style.background]}>
             {/* Auth Header */}
             <AuthHeader/>
-            <ScrollView contentContainerStyle={Style.topCenter}>
+            <ScrollView contentContainerStyle={[Style.topCenter, Style.scrollView]}>
                 <View style={Style.pageContent}>
                     {/* Item Header */}
                     <View style={Style.listHeader}>
