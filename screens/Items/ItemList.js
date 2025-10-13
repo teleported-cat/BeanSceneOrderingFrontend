@@ -152,7 +152,7 @@ export default function ItemList({props, navigation}) {
                                 <View key={index} style={Style.itemContainer}>
                                     <View style={Style.itemDetails}>
                                         <View style={Style.itemImageBox}>
-                                            <ImageFallback style={Style.itemImage} source={`../../assets/food_images/${item.imagePath}`} fallbackSource={`../../assets/food_images/item-placeholder.png`} resizeMode='contain' />
+                                            <ImageFallback style={Style.itemImage} source={`../../assets/food_images/${item.imagePath}`} fallbackSource={`../../assets/food_images/item-fallback.png`} resizeMode='contain' />
                                         </View>
                                         <View style={Style.itemInfo}>
                                             <Text style={[Style.itemText, Style.regularText]}>{item.name}</Text>
