@@ -161,10 +161,10 @@ export default function ItemList({props, navigation}) {
                                         </View>
                                     </View>
                                     <View style={Style.listActions}>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionView]}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('View Item')}>
                                             <Ionicons name='eye-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionEdit]}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => navigation.navigate('Update Item')}>
                                             <Ionicons name='pencil-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={[Style.actionButton, Style.actionDelete]}>
@@ -175,7 +175,7 @@ export default function ItemList({props, navigation}) {
                             );
                         })}
                         <View style={Style.listAddBox}>
-                            <TouchableOpacity style={Style.listAdd}>
+                            <TouchableOpacity style={Style.listAdd} onPress={() => navigation.navigate('Add Item')}>
                                 <Ionicons name='add-circle-outline' size={20} color='white'></Ionicons>
                                 <Text style={[Style.listAddText, Style.regularText]}>Add New Item</Text>
                             </TouchableOpacity>
@@ -202,7 +202,7 @@ export default function ItemList({props, navigation}) {
                             );
                         })}
                         <View style={Style.listAddBox}>
-                            <TouchableOpacity style={Style.listAdd}>
+                            <TouchableOpacity style={Style.listAdd} onPress={() => navigation.navigate('Add Category')}>
                                 <Ionicons name='add-circle-outline' size={20} color='white'></Ionicons>
                                 <Text style={[Style.listAddText, Style.regularText]}>Add New Category</Text>
                             </TouchableOpacity>
