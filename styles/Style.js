@@ -263,4 +263,19 @@ export default StyleSheet.create({
         fontSize: 16,
     },
     //#endregion
+    //#region Data Form
+    backButton: {
+        backgroundColor: cBackButtonBackground,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 8,
+        borderRadius: 5,
+        gap: 10,
+    },
+    backButtonText: {
+        color: white,
+        fontSize: 16,
+    },
+
+    //#endregion
 });
