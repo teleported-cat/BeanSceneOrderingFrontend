@@ -1,17 +1,49 @@
 {/* Components */}
+import React, {useEffect, useState} from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Picker } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AuthHeader from '../../components/AuthHeader.js';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigationState } from '@react-navigation/native';
 import BackButton from '../../components/BackButton.js';
+import { API_BASE_URL } from '../../components/APIAddress.js';
+
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
 export default function ItemAdd({props, navigation}) {
 
+    //#region Item POST
+    //#endregion
+    //#region Category GET
+    const [categoryData, setCategoryData] = useState([]);
+    const isFocused = useIsFocused();
 
+    const getCategories = async () => {
+        var url = API_BASE_URL + "/Category";
+        var header = new Headers({});
+        var options = {
+            method: "GET",
+            headers: header
+        };
+
+        try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            setCategoryData(data);
+        } catch(error) {
+            console.log("GET Categories failed: " + error.message);
+        }
+    };
+
+    useEffect(() => {
+        if (isFocused) {
+            getCategories();
+        }
+    }, [props, isFocused])
+    //#endregion
 
     return(
         <SafeAreaView style={[Style.center, Style.background]}>
@@ -82,7 +114,11 @@ export default function ItemAdd({props, navigation}) {
                             <Text style={[Style.formFieldText, Style.regularText]}>Category</Text>
                             <Picker style={[Style.formFieldInput, Style.formFieldPicker, Style.regularText]}>
                                     <Picker.Item label='Select category...' value=''></Picker.Item>
-                                    {/* TODO: map function for category data goes here */}
+                                    {categoryData.map((item, index) => {
+                                        return (
+                                            <Picker.Item key={index} label={item.name} value={item.name}></Picker.Item>
+                                        );
+                                    })}
                                 </Picker>
                         </View>
                     </View>
