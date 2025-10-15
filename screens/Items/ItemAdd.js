@@ -3,11 +3,16 @@ import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity,
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AuthHeader from '../../components/AuthHeader.js';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigationState } from '@react-navigation/native';
+import BackButton from '../../components/BackButton.js';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
 export default function ItemAdd({props, navigation}) {
+
+
+
     return(
         <SafeAreaView style={[Style.center, Style.background]}>
             {/* Auth Header */}
@@ -15,13 +20,7 @@ export default function ItemAdd({props, navigation}) {
             <ScrollView contentContainerStyle={[Style.topCenter, Style.scrollView]}>
                 <View style={Style.pageContent}>
                     {/* Back Button */}
-                    <View style={Style.backButtonBox}>
-                        <TouchableOpacity style={Style.backButton} onPress={() => navigation.navigate('Item List')}>
-                            <Ionicons name='arrow-back-outline' size={24} color='white'></Ionicons>
-                            <Text style={[Style.backButtonText, Style.boldText]}>Back</Text>
-                        </TouchableOpacity>
-                        <View style={Style.invisibleFill}></View>
-                    </View>
+                    <BackButton />
 
                     {/* Form Header */}
                     <View style={Style.listHeader}>
