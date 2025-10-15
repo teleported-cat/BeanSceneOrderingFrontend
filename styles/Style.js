@@ -264,6 +264,9 @@ export default StyleSheet.create({
     },
     //#endregion
     //#region Data Form
+    backButtonBox: {
+        flexDirection: 'row',
+    },
     backButton: {
         backgroundColor: cBackButtonBackground,
         flexDirection: 'row',
@@ -276,6 +279,55 @@ export default StyleSheet.create({
         color: white,
         fontSize: 16,
     },
-
+    invisibleFill: {
+        flex: 1,
+        width: '100%',
+    },
+    formBox: {
+        gap: 5,
+    },
+    formField: {
+        flex: 1,
+    },
+    formFieldText: {
+        color: cListHeader,
+        fontSize: 16,
+    },
+    formFieldInput: {
+        borderColor: cTextInputBorder,
+        borderWidth: 2,
+        borderRadius: 5,
+        fontSize: 16,
+        padding: 5,
+        flex: 1,
+    },
+    formDoubleField: {
+        flexDirection: 'row',
+        gap: 10,
+        flex: 1,
+    },
+    formButtonBox: {
+        paddingTop: 10,
+        borderTopWidth: 1,
+        borderColor: cListHeader,
+    },
+    formButton: {
+        backgroundColor: cButtonBackground,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        gap: 5,
+        borderRadius: 5,
+    },
+    formButtonText: {
+        fontSize: 16,
+        color: white,
+    },
+    formFieldPicker: {
+        backgroundColor: white,
+        borderStyle: 'solid',
+        textAlign: 'center',
+    },
     //#endregion
 });
