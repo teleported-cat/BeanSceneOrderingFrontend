@@ -13,6 +13,7 @@ const darkGold = '#CC9E09';
 const lightGrey = '#E0E0E0';
 const darkGrey = '#808080';
 const danger = '#FF3030';
+const success = '#1ec81e';
 //#endregion
 //#region Constants
 const cLoginBackground = darkBlue;
@@ -308,6 +309,7 @@ export default StyleSheet.create({
     },
     formButtonBox: {
         paddingTop: 10,
+        paddingBottom: 10,
         borderTopWidth: 1,
         borderColor: cListHeader,
     },
@@ -328,6 +330,19 @@ export default StyleSheet.create({
         backgroundColor: white,
         borderStyle: 'solid',
         textAlign: 'center',
+    },
+    formMessageBox: {
+        alignItems: 'center',
+    },
+    formMessage: {
+        fontSize: 24,
+        textAlign: 'center',
+    },
+    formMessageSuccess: {
+        color: success,
+    },
+    formMessageFailure: {
+        color: danger,
     },
     //#endregion
 });
