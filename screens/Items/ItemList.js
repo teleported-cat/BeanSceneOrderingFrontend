@@ -157,7 +157,7 @@ export default function ItemList({props, navigation}) {
                                         <View style={Style.itemInfo}>
                                             <Text style={[Style.itemText, Style.regularText]}>{item.name}</Text>
                                             <Text style={[Style.itemText, Style.itemCategoryText, Style.regularText]}>{item.categoryName}</Text>
-                                            <Text style={[Style.itemText, Style.boldText]}>${item.price}</Text>
+                                            <Text style={[Style.itemText, Style.boldText]}>${item.price.toFixed(2)}</Text>
                                         </View>
                                     </View>
                                     <View style={Style.listActions}>
