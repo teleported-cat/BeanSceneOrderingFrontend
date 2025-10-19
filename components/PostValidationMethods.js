@@ -24,3 +24,8 @@ export function isPositiveInteger(str) {
 export function isBlank(str) {
     return !str || str.trim() === '';
 };
+
+export function validateEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+}
