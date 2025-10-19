@@ -345,4 +345,53 @@ export default StyleSheet.create({
         color: danger,
     },
     //#endregion
+    //#region View Item
+    viewItemCard: {
+        flexDirection: 'row',
+        padding: 10,
+        gap: 10,
+        borderBottomWidth: 1,
+        borderColor: cListHeader,
+    },
+    viewItemImageBox: {
+        overflow: 'hidden',
+        width: 128,
+        height: 128,
+        borderRadius: 5,
+    },
+    viewItemImage: {
+        width: 128,
+        height: 128,
+        borderRadius: 5,
+    },
+    viewItemDetailText: {
+        fontSize: 24,
+    },
+    viewItemCategoryText: {
+        color: cListHeader,
+    },
+    viewItemDescription: {
+        fontSize: 20,
+        textAlign: 'center',
+    },
+    viewItemMiscBox: {
+        padding: 10,
+        gap: 10,
+        borderTopWidth: 1,
+        borderColor: cListHeader,
+    },
+    viewItemMiscText: {
+        fontSize: 20,
+    },
+    viewItemMiscAvailable: {
+        color: success,
+    },
+    viewItemMiscUnavailable: {
+        color: danger,
+    },
+    viewItemAllergens: {
+        padingRight: 10,
+        paddingLeft: 10,
+    },
+    //#endregion
 });
