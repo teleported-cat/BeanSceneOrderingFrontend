@@ -162,7 +162,7 @@ export default function ItemList({props, navigation}) {
                                         <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('View Item', {item})}>
                                             <Ionicons name='eye-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => navigation.navigate('Update Item')}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => navigation.navigate('Update Item', {item})}>
                                             <Ionicons name='pencil-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={[Style.actionButton, Style.actionDelete]}>
