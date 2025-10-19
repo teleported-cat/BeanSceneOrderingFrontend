@@ -102,7 +102,6 @@ export default function ItemList({props, navigation}) {
         try {
             const response = await fetch(url, options);
             const data = await response.json();
-            console.log(data);
             setItemData(data);
         } catch (error) {
             console.log("GET Items failed: " + error.message);
@@ -120,7 +119,6 @@ export default function ItemList({props, navigation}) {
         try {
             const response = await fetch(url, options);
             const data = await response.json();
-            console.log(data);
             setCategoryData(data);
         } catch (error) {
             console.log("GET Categories failed: " + error.message);
@@ -161,7 +159,7 @@ export default function ItemList({props, navigation}) {
                                         </View>
                                     </View>
                                     <View style={Style.listActions}>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('View Item')}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('View Item', {item})}>
                                             <Ionicons name='eye-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => navigation.navigate('Update Item')}>

@@ -1,4 +1,5 @@
 {/* Components */}
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AuthHeader from '../../components/AuthHeader.js';
@@ -8,7 +9,30 @@ import ImageFallback from '../../components/ImageFallback.js';
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
-export default function ItemView() {
+export default function ItemView({props, route, navigation}) {
+    const itemObject = route.params.item;
+
+    const dietType = () => {
+        if (itemObject.dietType === "neither") {
+            return "Contains Meat";
+        }
+        if (itemObject.dietType === "vegetarian") {
+            return "Vegetarian";
+        }
+        if (itemObject.dietType === "vegan") {
+            return "Vegan";
+        }
+    };
+
+    const allergens = () => {
+        if (itemObject.hasOwnProperty("allergens")) {
+            if (itemObject.allergens.length > 0) {
+                return itemObject.allergens;
+            }
+        }
+        return "None";
+    };
+
     return(
         <SafeAreaView style={[Style.center, Style.background]}>
             {/* Auth Header */}
@@ -21,23 +45,23 @@ export default function ItemView() {
                     {/* Name Card */}
                     <View style={Style.viewItemCard}>
                         <View style={Style.viewItemImageBox}>
-                            <ImageFallback style={Style.viewItemImage} source={`../../assets/food_images/item-placeholder.png`} fallbackSource={`../../assets/food_images/item-fallback.png`} resizeMode='contain' />
+                            <ImageFallback style={Style.viewItemImage} source={`../../assets/food_images/${itemObject.imagePath}`} fallbackSource={`../../assets/food_images/item-fallback.png`} resizeMode='contain' />
                         </View>
                         <View style={Style.itemInfo}>
-                            <Text style={[Style.viewItemDetailText, Style.regularText]}>Item Name</Text>
-                            <Text style={[Style.viewItemDetailText, Style.regularText, Style.viewItemCategoryText]}>Item Category</Text>
-                            <Text style={[Style.viewItemDetailText, Style.boldText]}>$00.00</Text>
+                            <Text style={[Style.viewItemDetailText, Style.regularText]}>{itemObject.name}</Text>
+                            <Text style={[Style.viewItemDetailText, Style.regularText, Style.viewItemCategoryText]}>{itemObject.categoryName}</Text>
+                            <Text style={[Style.viewItemDetailText, Style.boldText]}>${itemObject.price.toFixed(2)}</Text>
                         </View>
                     </View>
 
                     {/* Description */}
-                    <Text style={[Style.italicText, Style.viewItemDescription]}>Espresso made with premium coffee beans, filled with steamed milk with a foamy top.</Text>
+                    <Text style={[Style.italicText, Style.viewItemDescription]}>{itemObject.description}</Text>
 
                     {/* Misc Details */}
                     <View style={Style.viewItemMiscBox}>
-                        <Text style={[Style.viewItemMiscText, Style.viewItemMiscAvailable, Style.regularText]}>Available</Text>
-                        <Text style={[Style.viewItemMiscText, Style.regularText]}>Gluten Free</Text>
-                        <Text style={[Style.viewItemMiscText, Style.regularText]}>Vegetarian</Text>
+                        <Text style={[Style.viewItemMiscText, itemObject.available ? Style.viewItemMiscAvailable : Style.viewItemMiscUnavailable, Style.regularText]}>{itemObject.available ? "Available" : "Unavailable"}</Text>
+                        <Text style={[Style.viewItemMiscText, Style.regularText]}>{itemObject.glutenFree ? "Gluten Free" : "Contains Gluten"}</Text>
+                        <Text style={[Style.viewItemMiscText, Style.regularText]}>{dietType()}</Text>
                     </View>
 
                     {/* Allergens Header */}
@@ -47,7 +71,7 @@ export default function ItemView() {
 
                     {/* Allergens */}
                     <View style={Style.viewItemAllergens}>
-                        <Text style={[Style.viewItemMiscText, Style.regularText]}>Lactose, item, item</Text>
+                        <Text style={[Style.viewItemMiscText, Style.regularText]}>{allergens()}</Text>
                     </View>
 
                 </View>
