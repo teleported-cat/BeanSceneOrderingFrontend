@@ -1,7 +1,7 @@
 {/* Components */}
 import React, {useEffect, useState} from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TextInput, TouchableOpacity, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import AuthHeader from '../../components/AuthHeader.js';
@@ -13,79 +13,7 @@ import Style from '../../styles/Style.js';
 
 export default function ItemList({props, navigation}) {
     
-    // Placeholder data for map function
-    // const itemData = [
-    //     {
-    //         _id: '1',
-    //         name: 'Placeholder 1',
-    //         imagepath: 'item-placeholder.png',
-    //         price: 27.00,
-    //         categoryname: 'Main',
-    //     },
-    //     {
-    //         _id: '2',
-    //         name: 'Placeholder 2',
-    //         imagepath: 'item-placeholder.png',
-    //         price: 42.00,
-    //         categoryname: 'Entree',
-    //     },
-    //     {
-    //         _id: '3',
-    //         name: 'Placeholder 3',
-    //         imagepath: 'item-placeholder.png',
-    //         price: 3.00,
-    //         categoryname: 'Drinks',
-    //     },
-    //     {
-    //         _id: '4',
-    //         name: 'Placeholder 4',
-    //         imagepath: 'item-placeholder.png',
-    //         price: 10.50,
-    //         categoryname: 'Dessert',
-    //     },
-    //     {
-    //         _id: '5',
-    //         name: 'Placeholder 5',
-    //         imagepath: 'item-placeholder.png',
-    //         price: 1,
-    //         categoryname: 'Main',
-    //     },
-    //     {
-    //         _id: '6',
-    //         name: 'Placeholder 6',
-    //         imagepath: 'item-placeholder.png',
-    //         price: 1,
-    //         categoryname: 'Main',
-    //     },
-    //     {
-    //         _id: '7',
-    //         name: 'Placeholder 7',
-    //         imagepath: 'item-placeholder.png',
-    //         price: 1,
-    //         categoryname: 'Main',
-    //     },
-    // ];
-    // const categoryData = [
-    //     {
-    //         name: 'Entree',
-    //     },
-    //     {
-    //         name: 'Main',
-    //     },
-    //     {
-    //         name: 'Dessert',
-    //     },
-    //     {
-    //         name: 'Drinks',
-    //     },
-    //     {
-    //         name: 'Sides',
-    //     },
-    //     {
-    //         name: 'Specials',
-    //     },
-    // ];
-
+    //#region GET methods
     const [itemData, setItemData] = useState([]);
     const [categoryData, setCategoryData] = useState([]);
 
@@ -131,11 +59,67 @@ export default function ItemList({props, navigation}) {
             getCategories();
         }
     }, [props, isFocused])
+    //#endregion
+    //#region DELETE methods
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedObject, setSelectedObject] = useState({});
+    const [objectType, setObjectType] = useState('');
+
+    const showModal = (object, type) => {
+        setObjectType(type);
+        setSelectedObject(object);
+        setModalVisible(true);
+    };
+
+    const hideModal = () => {
+        setModalVisible(false);
+        setObjectType('');
+        setSelectedObject({});
+    };
+
+    const confirmDelete = async () => {
+        var url = `${API_BASE_URL}/${objectType}/${selectedObject._id}`;
+        var header = new Headers({});
+        header.append('Content-Type', "application/json");
+        var options = {
+            method: "DELETE",
+            headers: header
+        };
+
+        try {
+            const response = await fetch(url, options);
+            console.log((objectType === 'Items' ? "Item" : "Category") + " deleted!");
+            hideModal();
+            getItems();
+            getCategories();
+        } catch(error) {
+            console.log("DELETE " + (objectType === 'Items' ? "Item" : "Category") + " failed: " + error.message);
+        }
+    };
+    //#endregion
 
     return(
         <SafeAreaView style={[Style.center, Style.background]}>
             {/* Auth Header */}
             <AuthHeader/>
+
+            {/* Item Delete Modal */}
+            <Modal visible={modalVisible} transparent>
+                <View style={Style.modalBox}>
+                    <View style={Style.modal}>
+                        <Text style={[Style.modalMessage, Style.regularText]}>Are you sure you want to delete {selectedObject.name}?</Text>
+                        <View style={Style.modalActions}>
+                            <TouchableOpacity style={[Style.modalButton, Style.modalCancel]} onPress={() => hideModal()}>
+                                <Text style={[Style.modalButtonText, Style.regularText]}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[Style.modalButton, Style.modalDelete]} onPress={() => confirmDelete()}>
+                                <Text style={[Style.modalButtonText, Style.regularText]}>Delete</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+
             <ScrollView contentContainerStyle={[Style.topCenter, Style.scrollView]}>
                 <View style={Style.pageContent}>
                     {/* Item Header */}
@@ -165,7 +149,7 @@ export default function ItemList({props, navigation}) {
                                         <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => navigation.navigate('Update Item', {item})}>
                                             <Ionicons name='pencil-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => showModal(item, 'Items')}>
                                             <Ionicons name='trash-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
                                     </View>
@@ -192,7 +176,7 @@ export default function ItemList({props, navigation}) {
                                 <View key={index} style={Style.itemContainer}>
                                     <Text style={[Style.categoryText, Style.regularText]}>{item.name}</Text>
                                     <View style={Style.listActions}>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => showModal(item, 'Category')}>
                                             <Ionicons name='trash-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
                                     </View>

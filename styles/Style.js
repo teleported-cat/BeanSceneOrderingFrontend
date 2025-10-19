@@ -14,6 +14,7 @@ const lightGrey = '#E0E0E0';
 const darkGrey = '#808080';
 const danger = '#FF3030';
 const success = '#1ec81e';
+const transparentBlack = 'rgba(0,0,0,0.5)'
 //#endregion
 //#region Constants
 const cLoginBackground = darkBlue;
@@ -28,6 +29,7 @@ const cActionEditBackground = gold;
 const cActionDeleteBackground = danger;
 const cActionAddBackground = darkGrey;
 const cBackButtonBackground = darkGrey;
+const cModalBackground = transparentBlack;
 //#endregion
 
 export default StyleSheet.create({
@@ -392,6 +394,52 @@ export default StyleSheet.create({
     viewItemAllergens: {
         padingRight: 10,
         paddingLeft: 10,
+    },
+    //#endregion
+    //#region Modal
+    modalBox: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        flex: 1,
+        backgroundColor: cModalBackground,
+        padding: 10,
+    },
+    modal: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        backgroundColor: white,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        borderRadius: 5,
+        gap: 20,
+    },
+    modalActions: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignContent: 'center',
+        gap: 10,
+    },
+    modalMessage: {
+        fontSize: 24,
+        textAlign: 'center',
+    },
+    modalButton: {
+        padding: 10,
+        borderRadius: 5,
+        flex: 1,
+    },
+    modalDelete: {
+        backgroundColor: danger,
+    },
+    modalCancel: {
+        backgroundColor: darkGrey,
+    },
+    modalButtonText: {
+        fontSize: 24,
+        color: white,
+        textAlign: 'center',
     },
     //#endregion
 });
