@@ -13,7 +13,7 @@ import { isNumber, isPositiveNumber, isBlank, validateEmail } from '../../compon
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
-export default function StaffAdd() {
+export default function StaffAdd({props, navigation}) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
@@ -25,47 +25,39 @@ export default function StaffAdd() {
     const [messageStyle, setMessageStyle] = useState(Style.formMessageFailure);
 
     const addStaff = async () => {
-        console.log("start")
 
         // Validate required fields
         if (isBlank(firstName)) {
-            console.log(firstName);
             setMessageStyle(Style.formMessageFailure);
             setMessage("First Name is required.");
             return;
         }
         if (isBlank(lastName)) {
-            console.log(lastName);
             setMessageStyle(Style.formMessageFailure);
             setMessage("Last Name is required.");
             return;
         }
         if (isBlank(username)) {
-            console.log(username);
             setMessageStyle(Style.formMessageFailure);
             setMessage("Username is required.");
             return;
         }
         if (isBlank(email)) {
-            console.log(email);
             setMessageStyle(Style.formMessageFailure);
             setMessage("Email is required.");
             return;
         }
         if (!validateEmail(email)) {
-            console.log(email);
             setMessageStyle(Style.formMessageFailure);
             setMessage("Email address is invalid, double check it's spelt correctly.");
             return;
         }
         if (isBlank(password)) {
-            console.log(password);
             setMessageStyle(Style.formMessageFailure);
             setMessage("Password is required.");
             return;
         }
         if (isBlank(role)) {
-            console.log(role);
             setMessageStyle(Style.formMessageFailure);
             setMessage("Role is required.");
             return;
