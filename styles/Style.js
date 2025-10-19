@@ -442,4 +442,29 @@ export default StyleSheet.create({
         textAlign: 'center',
     },
     //#endregion
+    //#region Search
+    searchCategoryBox: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 10,
+    },
+    searchCategoryLabel: {
+        fontSize: 16,
+    },
+    searchBarBox: {
+        borderTopWidth: 1,
+        borderColor: cListHeader,
+        paddingTop: 10,
+    },
+    searchBar: {
+        textAlign: 'center',
+    },
+    searchEnd: {
+        fontSize: 16,
+        color: cListHeader,
+        textAlign: 'center',
+        marginBottom: 60,
+    },
+    //#endregion
 });

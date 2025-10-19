@@ -34,8 +34,7 @@ import OrderCheckout from './screens/Orders/OrderCheckout.js';
 
 import Reports from './screens/Reports/Reports.js';
 
-import ManagerSearch from './screens/Search/ManagerSearch.js';
-import StaffSearch from './screens/Search/StaffSearch.js';
+import Search from './screens/Search/Search.js';
 
 {/* Styles */}
 import Style from './styles/Style.js';
@@ -171,7 +170,7 @@ function ManagerSearchNavigator() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name='Search' component={ManagerSearch} />
+      <Stack.Screen name='Search List' component={Search} initialParams={{stackRole: 'Manager'}}/>
       <Stack.Screen name='Search View' component={ItemView} />
       <Stack.Screen name='Search Update' component={ItemUpdate} />
     </Stack.Navigator>
@@ -186,7 +185,7 @@ function StaffSearchNavigator() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name='Search' component={StaffSearch} />
+      <Stack.Screen name='Search List' component={Search} initialParams={{stackRole: 'Staff'}}/>
       <Stack.Screen name='Search View' component={ItemView} />
     </Stack.Navigator>
   );
