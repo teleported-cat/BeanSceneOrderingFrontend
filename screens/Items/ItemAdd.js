@@ -19,7 +19,7 @@ export default function ItemAdd({props, navigation}) {
     //#region Item POST
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [imagePath, setimagePath] = useState('');
+    const [imagePath, setImagePath] = useState('');
     const [price, setPrice] = useState('');
     const [available, setAvailable] = useState('');
     const [glutenFree, setGlutenFree] = useState('');
@@ -84,6 +84,7 @@ export default function ItemAdd({props, navigation}) {
             available: available === 'true',
             glutenfree: glutenFree === 'true',
             diettype: dietType,
+            allergens: allergens,
             categoryname: category,
         };
 
@@ -164,7 +165,7 @@ export default function ItemAdd({props, navigation}) {
                         </View>
                         <View style={Style.formField}>
                             <Text style={[Style.formFieldText, Style.regularText]}>Image Path</Text>
-                            <TextInput style={[Style.formFieldInput, Style.regularText]} onChangeText={(imagePath) => setimagePath(imagePath)}></TextInput>
+                            <TextInput style={[Style.formFieldInput, Style.regularText]} onChangeText={(imagePath) => setImagePath(imagePath)}></TextInput>
                         </View>
                         <View style={Style.formDoubleField}>
                             <View style={Style.formField}>
