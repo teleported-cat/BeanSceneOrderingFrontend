@@ -8,12 +8,13 @@ import Style from '../../styles/Style.js';
 
 export default function OrderCheckout() {
     return(
-        <SafeAreaView style={Style.center}>
-            <ScrollView contentContainerStyle={Style.topCenter}>
-                {/* Auth Header */}
-                <AuthHeader/>
-
-                <Text>OrderCheckout</Text>
+        <SafeAreaView style={[Style.center, Style.background]}>
+            {/* Auth Header */}
+            <AuthHeader/>
+            <ScrollView contentContainerStyle={[Style.topCenter, Style.scrollView]}>
+                <View style={Style.pageContent}>
+                    <Text>OrderCheckout</Text>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
