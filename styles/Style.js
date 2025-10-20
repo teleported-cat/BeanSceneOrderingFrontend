@@ -13,7 +13,7 @@ const darkGold = '#CC9E09';
 const lightGrey = '#E0E0E0';
 const darkGrey = '#808080';
 const danger = '#FF3030';
-const success = '#1ec81e';
+const success = '#008000';
 const transparentBlack = 'rgba(0,0,0,0.5)'
 //#endregion
 //#region Constants
@@ -27,6 +27,7 @@ const cListHeader = darkGrey;
 const cActionViewBackground = lightBlue;
 const cActionEditBackground = gold;
 const cActionDeleteBackground = danger;
+const cActionCloseBackgrond = darkGrey;
 const cActionAddBackground = darkGrey;
 const cBackButtonBackground = darkGrey;
 const cModalBackground = transparentBlack;
@@ -194,6 +195,7 @@ export default StyleSheet.create({
     },
     listActions: {
         flexDirection: 'row',
+        alignItems: 'center',
         gap: 8,
     },
     actionButton: {
@@ -210,6 +212,9 @@ export default StyleSheet.create({
     },
     actionDelete: {
         backgroundColor: cActionDeleteBackground,
+    },
+    actionClose: {
+        backgroundColor: cActionCloseBackgrond,
     },
     listAddBox: {
         padding: 8,
@@ -465,6 +470,44 @@ export default StyleSheet.create({
         color: cListHeader,
         textAlign: 'center',
         marginBottom: 60,
+    },
+    //#endregion
+    //#region Order
+    orderHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    orderAddBox: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    orderAdd: {
+        
+    },
+    orderStatusButton: {
+        paddingTop: 4,
+        paddingBottom: 4,
+        paddingLeft: 8,
+        paddingRight: 8,
+        borderRadius: 5,
+    },
+    orderStatusText: {
+        color: white,
+        fontSize: 16,
+    },
+    orderStatusCompleted: {
+        backgroundColor: success,
+    },
+    orderStatusInProgress: {
+        backgroundColor: lightBlue,
+    },
+    orderStatusCancelled: {
+        backgroundColor: danger,
+    },
+    orderDateBox: {
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     //#endregion
 });
