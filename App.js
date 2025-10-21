@@ -29,6 +29,8 @@ import StaffAdd from './screens/Staff/StaffAdd.js';
 import StaffUpdate from './screens/Staff/StaffUpdate.js';
 
 import OrderList from './screens/Orders/OrderList.js';
+import OrderView from './screens/Orders/OrderView.js';
+import OrderItemView from './screens/Orders/OrderItemView.js';
 import OrderNew from './screens/Orders/OrderNew.js';
 import OrderCheckout from './screens/Orders/OrderCheckout.js';
 
@@ -156,6 +158,8 @@ function OrderNavigator() {
       }}
     >
       <Stack.Screen name='Order List' component={OrderList} />
+      <Stack.Screen name='Order View' component={OrderView} />
+      <Stack.Screen name='View Item' component={OrderItemView} />
       <Stack.Screen name='Order New' component={OrderNew} />
       <Stack.Screen name='Order Checkout' component={OrderCheckout} />
     </Stack.Navigator>

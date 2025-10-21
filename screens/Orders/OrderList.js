@@ -146,7 +146,7 @@ export default function OrderList({props, navigation}) {
                                         </View>
                                     ) : (
                                         <View style={Style.listActions}>
-                                            <TouchableOpacity style={[Style.actionButton, Style.actionView]}>
+                                            <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('Order View', {item})}>
                                                 <Ionicons name='eye-outline' size={20} color='white'></Ionicons>
                                             </TouchableOpacity>
                                             <TouchableOpacity style={[Style.orderStatusButton, buttonStyle]} onPress={() => {
