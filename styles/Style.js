@@ -538,5 +538,33 @@ export default StyleSheet.create({
     deletedItem: {
         color: danger,
     },
+    fab: {
+        flexDirection: 'row',
+        gap: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 5,
+        position: 'absolute',
+        backgroundColor: cActionViewBackground,
+        bottom: 16, 
+        right: 16,
+        boxShadow: '-4px 4px ' + transparentBlack,
+    },
+    fabText: {
+        color: white,
+        fontSize: 24,
+    },
+    orderQuantity: {
+        borderWidth: 2,
+        borderColor: cTextInputBorder,
+        borderRadius: 5,
+        maxWidth: 40,
+        paddingTop: 5,
+        paddingBottom: 5,
+        fontSize: 16,
+        textAlign: 'center',
+        
+    },
     //#endregion
 });

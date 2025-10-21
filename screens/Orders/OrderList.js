@@ -70,7 +70,7 @@ export default function OrderList({props, navigation}) {
                 <View style={Style.pageContent}>
                     {/* Add Order Button */}
                     <View style={[Style.listAddBox, Style.orderAddBox]}>
-                        <TouchableOpacity style={Style.listAdd}>
+                        <TouchableOpacity style={Style.listAdd} onPress={() => {navigation.navigate('Order New')}}>
                             <Ionicons name='add-circle-outline' size={20} color='white'></Ionicons>
                             <Text style={[Style.listAddText, Style.regularText]}>Add New Order</Text>
                         </TouchableOpacity>
