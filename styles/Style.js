@@ -535,5 +535,8 @@ export default StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
     },
+    deletedItem: {
+        color: danger,
+    },
     //#endregion
 });

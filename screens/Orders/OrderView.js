@@ -112,22 +112,40 @@ export default function OrderView({props, route, navigation}) {
                         {itemData.map((item, index) => {
                             return (
                                 <View key={index} style={Style.itemContainer}>
-                                    <View style={Style.itemDetails}>
-                                        <View style={Style.itemImageBox}>
-                                            <ImageFallback style={Style.itemImage} source={`../../assets/food_images/${item.imagepath}`} fallbackSource={`../../assets/food_images/item-fallback.png`} resizeMode='contain' />
+                                    {item.invalid ? (
+                                        <View style={Style.itemDetails}>
+                                            <View style={Style.itemImageBox}>
+                                                <ImageFallback style={Style.itemImage} source={`../../assets/food_images/item-deleted.png`} fallbackSource={`../../assets/food_images/item-fallback.png`} resizeMode='contain' />
+                                            </View>
+                                            <View style={Style.itemInfo}>
+                                                <Text style={[Style.itemText, Style.deletedItem, Style.italicText]}>Deleted Item</Text>
+                                                <Text style={[Style.itemText, Style.regularText]}>Quantity: {item.quantity}</Text>
+                                            </View>
                                         </View>
-                                        <View style={Style.itemInfo}>
-                                            <Text style={[Style.itemText, Style.regularText]}>{item.name}</Text>
-                                            <Text style={[Style.itemText, Style.itemCategoryText, Style.regularText]}>{item.categoryname}</Text>
-                                            <Text style={[Style.itemText, Style.boldText]}>${item.price.$numberDecimal ? Number(item.price.$numberDecimal).toFixed(2) : Number(item.price).toFixed(2)}</Text>
-                                            <Text style={[Style.itemText, Style.regularText]}>Quantity: {item.quantity}</Text>
+                                    ) : (
+                                        <View style={Style.itemDetails}>
+                                            <View style={Style.itemImageBox}>
+                                                <ImageFallback style={Style.itemImage} source={`../../assets/food_images/${item.imagepath}`} fallbackSource={`../../assets/food_images/item-fallback.png`} resizeMode='contain' />
+                                            </View>
+                                            <View style={Style.itemInfo}>
+                                                <Text style={[Style.itemText, Style.regularText]}>{item.name}</Text>
+                                                <Text style={[Style.itemText, Style.itemCategoryText, Style.regularText]}>{item.categoryname}</Text>
+                                                <Text style={[Style.itemText, Style.boldText]}>${item.price.$numberDecimal ? Number(item.price.$numberDecimal).toFixed(2) : Number(item.price).toFixed(2)}</Text>
+                                                <Text style={[Style.itemText, Style.regularText]}>Quantity: {item.quantity}</Text>
+                                            </View>
                                         </View>
-                                    </View>
-                                    <View style={Style.listActions}>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('View Item', {item, orderObject})}>
-                                            <Ionicons name='eye-outline' size={20} color='white'></Ionicons>
-                                        </TouchableOpacity>
-                                    </View>
+                                    )}
+                                    
+                                    {item.invalid ? (
+                                        <View style={Style.listActions}></View>
+                                    ) : (
+                                        <View style={Style.listActions}>
+                                            <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('View Item', {item, orderObject})}>
+                                                <Ionicons name='eye-outline' size={20} color='white'></Ionicons>
+                                            </TouchableOpacity>
+                                        </View>
+                                    )}
+                                    
                                 </View>
                             );
                         })}
