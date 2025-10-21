@@ -509,5 +509,31 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    orderViewDetails: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    orderViewDate: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 10,
+    },
+    orderViewInfo: {
+        alignItems: 'center',
+    },
+    orderViewLabel: {
+        fontSize: 16,
+        color: cListHeader,
+    },
+    orderViewText: {
+        fontSize: 16,
+    },
+    orderViewNoteBox: {
+
+    },
+    orderViewNote: {
+        fontSize: 16,
+        textAlign: 'center',
+    },
     //#endregion
 });
