@@ -119,7 +119,6 @@ export default function OrderView({props, route, navigation}) {
                                             </View>
                                             <View style={Style.itemInfo}>
                                                 <Text style={[Style.itemText, Style.deletedItem, Style.italicText]}>Deleted Item</Text>
-                                                <Text style={[Style.itemText, Style.regularText]}>Quantity: {item.quantity}</Text>
                                             </View>
                                         </View>
                                     ) : (
@@ -131,11 +130,13 @@ export default function OrderView({props, route, navigation}) {
                                                 <Text style={[Style.itemText, Style.regularText]}>{item.name}</Text>
                                                 <Text style={[Style.itemText, Style.itemCategoryText, Style.regularText]}>{item.categoryname}</Text>
                                                 <Text style={[Style.itemText, Style.boldText]}>${item.price.$numberDecimal ? Number(item.price.$numberDecimal).toFixed(2) : Number(item.price).toFixed(2)}</Text>
-                                                <Text style={[Style.itemText, Style.regularText]}>Quantity: {item.quantity}</Text>
                                             </View>
                                         </View>
                                     )}
-                                    
+                                    <View style={Style.itemQuantity}>
+                                        <Text style={[Style.itemQuantityText, Style.boldText]}>Quantity:</Text>
+                                        <Text style={[Style.itemQuantityText, Style.regularText]}>{item.quantity}</Text>
+                                    </View>
                                     {item.invalid ? (
                                         <View style={Style.listActions}></View>
                                     ) : (

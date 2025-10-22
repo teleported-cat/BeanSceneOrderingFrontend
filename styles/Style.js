@@ -566,5 +566,31 @@ export default StyleSheet.create({
         textAlign: 'center',
         
     },
+    orderTotalPrice: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: cListHeader,
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+    orderPriceText: {
+        fontSize: 16,
+    },
+    orderRemoveButton: {
+        backgroundColor: danger,
+        borderRadius: 5,
+        flexDirection: 'row',
+        gap: 8,
+        padding: 4,
+    },
+    itemQuantity: {
+        gap: 5,
+        flexDirection: 'row',
+    },
+    itemQuantityText: {
+        fontSize: 16,
+    },
     //#endregion
 });
