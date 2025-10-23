@@ -584,6 +584,15 @@ export default StyleSheet.create({
         flexDirection: 'row',
         gap: 8,
         padding: 4,
+        alignItems: 'center',
+    },
+    orderAddButton: {
+        backgroundColor: lightBlue,
+        borderRadius: 5,
+        flexDirection: 'row',
+        gap: 8,
+        padding: 4,
+        alignItems: 'center',
     },
     itemQuantity: {
         gap: 5,
@@ -591,6 +600,9 @@ export default StyleSheet.create({
     },
     itemQuantityText: {
         fontSize: 16,
+    },
+    orderHintText: {
+        textAlign: 'center',
     },
     //#endregion
 });

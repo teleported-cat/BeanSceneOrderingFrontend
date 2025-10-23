@@ -12,6 +12,88 @@ import ImageFallback from '../../components/ImageFallback.js';
 import Style from '../../styles/Style.js';
 
 export default function OrderNew({props, route, navigation}) {
+    //#region Order storage
+    const transferedOrder = route.params?.order;
+
+    const [tableNo, setTableNo] = useState('');
+    const [name, setName] = useState('');
+    const [notes, setNotes] = useState('');
+    const [orderItems, setOrderItems] = useState([]);
+
+    const [quantityValues, setQuantityValues] = useState({});
+    const [numberOfItems, setNumberOfItems] = useState(0);
+
+    const handleQuantityChange = (id, quantity) => {
+        setQuantityValues(prev => ({
+            ...prev,
+            [id]: quantity
+        }));
+    };
+
+    const setOrderData = () => {
+        if (transferedOrder != null) {
+            console.log("OrderNew: Got transfered order!");
+            setTableNo(transferedOrder.tableno);
+            setName(transferedOrder.name);
+            setNotes(transferedOrder.notes);
+            setOrderItems(transferedOrder.itemids);
+            setNumberOfItems(transferedOrder.itemids.length);
+            console.log(transferedOrder);
+            return;
+        }
+        console.log("OrderNew: No order! Generating...");
+    };
+
+    const addItemToOrder = (id) => {
+        console.log(typeof(quantityValues[id]));
+
+        // quantity has to be a positive, non-zero number
+        if (quantityValues[id] <= 0 || isNaN(quantityValues[id])) {
+            console.log("Display a scary error about the quantity being a positive integer.");
+            return;
+        }
+
+        if (!Number.isInteger(Number(quantityValues[id]))) {
+            console.log("Display a scary error about the quantity being a positive integer.");
+            return;
+        }
+
+        const alreadyInOrder = orderItems.map(item => item.id).includes(id);
+        if (alreadyInOrder) {
+            console.log("Display a scary error about the item already being in order.");
+            return;
+        }
+
+        const newItems = orderItems;
+        newItems.push({ quantity: Number(quantityValues[id]), _id: id });
+        setOrderItems(newItems);
+        setNumberOfItems(numberOfItems + 1);
+
+        console.log(orderItems);
+    };
+
+    const constructOrderObject = () => {
+        const order = {
+            tableno: tableNo,
+            name: name,
+            notes: notes,
+            itemids: orderItems,
+        };
+        return order;
+    };
+
+    const proceedToCheckout = () => {
+        if (orderItems.length == 0) {
+            console.log("Display a scary error about how you can't checkout no items.");
+            return;
+        }
+        const order = constructOrderObject();
+        navigation.navigate('Order Checkout', {order});
+    };
+
+
+    //#endregion
+    //#region GET methods
     const [categoryData, setCategoryData] = useState([]);
     const [itemData, setItemData] = useState([]);
 
@@ -60,13 +142,14 @@ export default function OrderNew({props, route, navigation}) {
         if (isFocused) {
             getItems();
             getCategories();
+            setOrderData();
         }
     }, [props, isFocused])
 
     const updateQuery = (newQuery, newFilter) => {
         let newItems = [];
         const trimmedQuery = newQuery.trim().toLowerCase();
-
+        
         // Loop through each item and add each item with conditions
         for (let i = 0; i < itemData.length; i++) {
             const itemName = itemData[i].name.toLowerCase();
@@ -76,9 +159,10 @@ export default function OrderNew({props, route, navigation}) {
                 }
             }
         }
-
+        
         setQueriedData(newItems);
     };
+    //#endregion
 
     return(
         <SafeAreaView style={[Style.center, Style.background]}>
@@ -129,6 +213,16 @@ export default function OrderNew({props, route, navigation}) {
                         }></TextInput>
                     </View>
 
+                    {/* Hint Text */}
+                    <View>
+                        <Text style={[Style.orderHintText, Style.italicText]}>
+                            Type in a quantity, then press 'plus' to add an item to the order. 
+                        </Text>
+                        <Text style={[Style.orderHintText, Style.italicText]}>
+                            You can remove an item on the checkout page.
+                        </Text>
+                    </View>
+
                     {/* Results Header */}
                     <View style={Style.listHeader}>
                         <Text style={[Style.listHeaderText, Style.boldText]}>Results</Text>
@@ -137,6 +231,9 @@ export default function OrderNew({props, route, navigation}) {
                     {/* Item List */}
                     <View style={Style.listBox}>
                         {queriedData.map((item, index) => {
+                            if (!item.available) {
+                                return;
+                            }
                             return (
                                 <View key={index} style={Style.itemContainer}>
                                     <View style={Style.itemDetails}>
@@ -150,10 +247,11 @@ export default function OrderNew({props, route, navigation}) {
                                         </View>
                                     </View>
                                     <View style={Style.listActions}>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionView]}>
+                                        <TouchableOpacity style={Style.orderAddButton} onPress={() => {addItemToOrder(item._id)}}>
                                             <Ionicons name='add-outline' size={20} color='white'></Ionicons>
+                                            <Text style={[Style.listAddText, Style.regularText]}>Add</Text>
                                         </TouchableOpacity>
-                                        <TextInput style={[Style.orderQuantity, Style.regularText]} defaultValue={0} maxLength={2}></TextInput>
+                                        <TextInput style={[Style.orderQuantity, Style.regularText]} defaultValue={0} maxLength={2} onChangeText={(text) => handleQuantityChange(item._id, text)}></TextInput>
                                     </View>
                                 </View>
                             );
@@ -166,10 +264,10 @@ export default function OrderNew({props, route, navigation}) {
             </ScrollView>
 
             {/* Checkout FAB */}
-            <TouchableOpacity style={Style.fab} onPress={() => navigation.navigate('Order Checkout')}>
+            <TouchableOpacity style={Style.fab} onPress={() => proceedToCheckout()}>
                 <Ionicons name='cart-outline' size={32} color='white'></Ionicons>
                 <Text style={[Style.fabText, Style.boldText]}>Checkout</Text>
-                <Text style={[Style.fabText, Style.boldText]}>(0)</Text>
+                <Text style={[Style.fabText, Style.boldText]}>({numberOfItems})</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );

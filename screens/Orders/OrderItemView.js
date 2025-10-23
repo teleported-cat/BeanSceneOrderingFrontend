@@ -62,7 +62,7 @@ export default function OrderItemView({props, route, navigation}) {
                         <View style={Style.itemInfo}>
                             <Text style={[Style.viewItemDetailText, Style.regularText]}>{itemObject.name}</Text>
                             <Text style={[Style.viewItemDetailText, Style.regularText, Style.viewItemCategoryText]}>{itemObject.categoryname}</Text>
-                            <Text style={[Style.viewItemDetailText, Style.boldText]}>${itemObject.price.toFixed(2)}</Text>
+                            <Text style={[Style.viewItemDetailText, Style.boldText]}>${Number(itemObject.price).toFixed(2)}</Text>
                         </View>
                     </View>
 

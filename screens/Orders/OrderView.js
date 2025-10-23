@@ -15,7 +15,7 @@ import Style from '../../styles/Style.js';
 export default function OrderView({props, route, navigation}) {
     const orderObject = route.params.item;
 
-    const date = new Date(orderObject.dateTime);
+    const date = new Date(orderObject.datetime);
     const monthString = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1);
     const minuteString = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
     const twelveHour = date.getHours() >= 12 ? "PM" : "AM";

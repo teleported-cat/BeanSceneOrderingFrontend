@@ -105,7 +105,7 @@ export default function OrderList({props, navigation}) {
                                     break;
                             }
 
-                            const date = new Date(item.dateTime);
+                            const date = new Date(item.datetime);
                             const monthString = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : (date.getMonth() + 1);
                             const minuteString = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
                             const twelveHour = date.getHours() >= 12 ? "PM" : "AM";
@@ -115,7 +115,7 @@ export default function OrderList({props, navigation}) {
                             return (
                                 <View key={index} style={Style.itemContainer}>
                                     <View style={Style.itemInfo}>
-                                        <Text style={[Style.itemText, Style.italicText]}>{item.tableNo}</Text>
+                                        <Text style={[Style.itemText, Style.italicText]}>{item.tableno}</Text>
                                         <Text style={[Style.itemText, Style.itemCategoryText, Style.regularText]}>{item.name}</Text>
                                     </View>
                                     <View style={[Style.orderDateBox]}>
