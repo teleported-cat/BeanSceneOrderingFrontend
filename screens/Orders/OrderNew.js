@@ -216,7 +216,7 @@ export default function OrderNew({props, route, navigation}) {
                     {/* Hint Text */}
                     <View>
                         <Text style={[Style.orderHintText, Style.italicText]}>
-                            Type in a quantity, then press 'plus' to add an item to the order. 
+                            Type in a quantity, then press 'Add' to add an item to the order. 
                         </Text>
                         <Text style={[Style.orderHintText, Style.italicText]}>
                             You can remove an item on the checkout page.
@@ -234,6 +234,7 @@ export default function OrderNew({props, route, navigation}) {
                             if (!item.available) {
                                 return;
                             }
+                            const itemAdded = orderItems.map(i => i._id).includes(item._id);
                             return (
                                 <View key={index} style={Style.itemContainer}>
                                     <View style={Style.itemDetails}>
@@ -246,13 +247,22 @@ export default function OrderNew({props, route, navigation}) {
                                             <Text style={[Style.itemText, Style.boldText]}>${item.price.toFixed(2)}</Text>
                                         </View>
                                     </View>
-                                    <View style={Style.listActions}>
-                                        <TouchableOpacity style={Style.orderAddButton} onPress={() => {addItemToOrder(item._id)}}>
-                                            <Ionicons name='add-outline' size={20} color='white'></Ionicons>
-                                            <Text style={[Style.listAddText, Style.regularText]}>Add</Text>
-                                        </TouchableOpacity>
-                                        <TextInput style={[Style.orderQuantity, Style.regularText]} defaultValue={0} maxLength={2} onChangeText={(text) => handleQuantityChange(item._id, text)}></TextInput>
-                                    </View>
+                                    {itemAdded ? (
+                                        <View style={Style.listActions}>
+                                            <View style={[Style.orderAddButton, Style.orderAddedButton]}>
+                                                <Ionicons name='checkmark-outline' size={20} color='white'></Ionicons>
+                                                <Text style={[Style.listAddText, Style.regularText]}>Added</Text>
+                                            </View>
+                                        </View>
+                                    ) : (
+                                        <View style={Style.listActions}>
+                                            <TouchableOpacity style={Style.orderAddButton} onPress={() => {addItemToOrder(item._id)}}>
+                                                <Ionicons name='add-outline' size={20} color='white'></Ionicons>
+                                                <Text style={[Style.listAddText, Style.regularText]}>Add</Text>
+                                            </TouchableOpacity>
+                                            <TextInput style={[Style.orderQuantity, Style.regularText]} defaultValue={0} maxLength={2} onChangeText={(text) => handleQuantityChange(item._id, text)}></TextInput>
+                                        </View>
+                                    )}
                                 </View>
                             );
                         })}

@@ -604,5 +604,8 @@ export default StyleSheet.create({
     orderHintText: {
         textAlign: 'center',
     },
+    orderAddedButton: {
+        backgroundColor: cListHeader,
+    },
     //#endregion
 });
