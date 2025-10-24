@@ -13,6 +13,7 @@ const darkGold = '#CC9E09';
 const lightGrey = '#E0E0E0';
 const darkGrey = '#808080';
 const danger = '#FF3030';
+const lightDanger = '#ffcccc';
 const success = '#008000';
 const transparentBlack = 'rgba(0,0,0,0.5)'
 //#endregion
@@ -606,6 +607,24 @@ export default StyleSheet.create({
     },
     orderAddedButton: {
         backgroundColor: cListHeader,
+    },
+    //#endregion
+    //#region Toast
+    toast: {
+        position: 'absolute',
+        bottom: 16,
+        left: 16,
+        backgroundColor: lightDanger,
+        padding: 10,
+        borderLeftWidth: 4,
+        borderColor: danger,
+        borderRadius: 5,
+        maxWidth: 250,
+        boxShadow: '-4px 4px ' + transparentBlack,
+    },
+    toastText: {
+        fontSize: 16,
+        color: danger,
     },
     //#endregion
 });

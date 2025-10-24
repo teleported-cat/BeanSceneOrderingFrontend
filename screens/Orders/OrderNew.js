@@ -23,6 +23,19 @@ export default function OrderNew({props, route, navigation}) {
     const [quantityValues, setQuantityValues] = useState({});
     const [numberOfItems, setNumberOfItems] = useState(0);
 
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVisible, setToastVisible] = useState(false);
+
+    useEffect(() => {
+        if (toastVisible) {
+            const timer = setTimeout(() => {
+                setToastVisible(false);
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [toastVisible]);
+
     const handleQuantityChange = (id, quantity) => {
         setQuantityValues(prev => ({
             ...prev,
@@ -50,17 +63,23 @@ export default function OrderNew({props, route, navigation}) {
         // quantity has to be a positive, non-zero number
         if (quantityValues[id] <= 0 || isNaN(quantityValues[id])) {
             console.log("Display a scary error about the quantity being a positive integer.");
+            setToastMessage('Quantity must be a number greater than 0!');
+            setToastVisible(true);
             return;
         }
 
         if (!Number.isInteger(Number(quantityValues[id]))) {
             console.log("Display a scary error about the quantity being a positive integer.");
+            setToastMessage('Quantity must be a postive, whole number!');
+            setToastVisible(true);
             return;
         }
 
         const alreadyInOrder = orderItems.map(item => item.id).includes(id);
         if (alreadyInOrder) {
             console.log("Display a scary error about the item already being in order.");
+            setToastMessage('This item is already in the order!');
+            setToastVisible(true);
             return;
         }
 
@@ -85,6 +104,8 @@ export default function OrderNew({props, route, navigation}) {
     const proceedToCheckout = () => {
         if (orderItems.length == 0) {
             console.log("Display a scary error about how you can't checkout no items.");
+            setToastMessage('Can\'t checkout zero items!');
+            setToastVisible(true);
             return;
         }
         const order = constructOrderObject();
@@ -279,6 +300,13 @@ export default function OrderNew({props, route, navigation}) {
                 <Text style={[Style.fabText, Style.boldText]}>Checkout</Text>
                 <Text style={[Style.fabText, Style.boldText]}>({numberOfItems})</Text>
             </TouchableOpacity>
+            
+            {/* Error Toast */}
+            {toastVisible && (
+                <View style={Style.toast}>
+                    <Text style={[Style.toastText, Style.regularText]}>{toastMessage}</Text>
+                </View>
+            )}
         </SafeAreaView>
     );
 }
