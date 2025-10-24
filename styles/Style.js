@@ -627,4 +627,18 @@ export default StyleSheet.create({
         color: danger,
     },
     //#endregion
+    //#region Reports
+    barChart: {
+        paddingRight: 0,
+        marginLeft: -35,
+    },
+    chartBox: {
+        borderColor: cListHeader,
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingTop: 10,
+        paddingBottom: 10,
+        boxShadow: '-4px 4px ' + transparentBlack,
+    },
+    //#endregion
 });
