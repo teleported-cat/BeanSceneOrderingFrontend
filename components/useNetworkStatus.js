@@ -6,7 +6,7 @@ export default function useNetworkStatus() {
     const [isOffline, setIsOffline] = useState(null);
 
     useEffect(() => {
-        const FORCE_OFFLINE = true;
+        const FORCE_OFFLINE = false;
         if (FORCE_OFFLINE) {
             setIsOffline(true);
             return;
