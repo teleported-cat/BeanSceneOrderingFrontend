@@ -641,4 +641,9 @@ export default StyleSheet.create({
         boxShadow: '-4px 4px ' + transparentBlack,
     },
     //#endregion
+    //#region Misc
+    offlineToastBox: {
+
+    },
+    //#endregion
 });

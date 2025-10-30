@@ -7,11 +7,15 @@ import { Ionicons } from '@expo/vector-icons';
 import AuthHeader from '../../components/AuthHeader.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
+import { useNetInfo } from "@react-native-community/netinfo";
+import OfflineToast from '../../components/OfflineToast.js';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
 export default function ItemList({props, navigation}) {
+
+    const netInfo = useNetInfo();
     
     //#region GET methods
     const [itemData, setItemData] = useState([]);
@@ -193,6 +197,9 @@ export default function ItemList({props, navigation}) {
                 </View>
 
             </ScrollView>
+
+            {/* Offline Toast */}
+            <OfflineToast/>
         </SafeAreaView>
     );
 }
