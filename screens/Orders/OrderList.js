@@ -7,11 +7,14 @@ import { Ionicons } from '@expo/vector-icons';
 import AuthHeader from '../../components/AuthHeader.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
+import useNetworkStatus from '../../components/useNetworkStatus.js';
+import OfflineToast from '../../components/OfflineToast.js';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
 export default function OrderList({props, navigation}) {
+    const isOffline = useNetworkStatus();
     //#region GET method
     const [orderData, setOrderData] = useState([]);
 
@@ -70,7 +73,10 @@ export default function OrderList({props, navigation}) {
                 <View style={Style.pageContent}>
                     {/* Add Order Button */}
                     <View style={[Style.listAddBox, Style.orderAddBox]}>
-                        <TouchableOpacity style={Style.listAdd} onPress={() => {navigation.navigate('Order New')}}>
+                        <TouchableOpacity style={Style.listAdd} onPress={() => {
+                            if (isOffline) {return;}
+                            navigation.navigate('Order New');
+                            }}>
                             <Ionicons name='add-circle-outline' size={20} color='white'></Ionicons>
                             <Text style={[Style.listAddText, Style.regularText]}>Add New Order</Text>
                         </TouchableOpacity>
@@ -146,10 +152,14 @@ export default function OrderList({props, navigation}) {
                                         </View>
                                     ) : (
                                         <View style={Style.listActions}>
-                                            <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('Order View', {item})}>
+                                            <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => {
+                                                if (isOffline) {return;}
+                                                navigation.navigate('Order View', {item});
+                                                }}>
                                                 <Ionicons name='eye-outline' size={20} color='white'></Ionicons>
                                             </TouchableOpacity>
                                             <TouchableOpacity style={[Style.orderStatusButton, buttonStyle]} onPress={() => {
+                                                if (isOffline) {return;}
                                                 setEditOrderId(item._id);
                                                 setEditOrderStatus(item.status);
                                             }}>
@@ -163,6 +173,8 @@ export default function OrderList({props, navigation}) {
                     </View>
                 </View>
             </ScrollView>
+            {/* Offline Toast */}
+            <OfflineToast/>
         </SafeAreaView>
     );
 }

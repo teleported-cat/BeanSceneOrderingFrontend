@@ -8,11 +8,14 @@ import AuthHeader from '../../components/AuthHeader.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
 import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from "react-native-chart-kit";
+import useNetworkStatus from '../../components/useNetworkStatus.js';
+import OfflineToast from '../../components/OfflineToast.js';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
 export default function Reports({props}) {
+    const isOffline = useNetworkStatus();
     const [orderData, setOrderData] = useState([]);
 
     const [orderCompositionData, setOrderCompositionData] = useState([
@@ -278,6 +281,8 @@ export default function Reports({props}) {
 
                 </View>
             </ScrollView>
+            {/* Offline Toast */}
+            <OfflineToast/>
         </SafeAreaView>
     );
 }

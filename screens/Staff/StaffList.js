@@ -6,11 +6,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import AuthHeader from '../../components/AuthHeader.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
+import useNetworkStatus from '../../components/useNetworkStatus.js';
+import OfflineToast from '../../components/OfflineToast.js';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
 export default function StaffList({props, navigation}) {
+    const isOffline = useNetworkStatus();
     //#region GET Staff
     const [staffData, setStaffData] = useState([]);
 
@@ -132,6 +135,8 @@ export default function StaffList({props, navigation}) {
                     </View>
                 </View>
             </ScrollView>
+            {/* Offline Toast */}
+            <OfflineToast/>
         </SafeAreaView>
     );
 }

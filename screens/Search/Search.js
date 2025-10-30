@@ -7,11 +7,14 @@ import { Ionicons } from '@expo/vector-icons';
 import AuthHeader from '../../components/AuthHeader.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
+import useNetworkStatus from '../../components/useNetworkStatus.js';
+import OfflineToast from '../../components/OfflineToast.js';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
 export default function Search({props, route, navigation}) {
+    const isOffline = useNetworkStatus();
     const stackRole = route.params?.stackRole;
 
     //#region GET methods
@@ -195,7 +198,10 @@ export default function Search({props, route, navigation}) {
                                         </TouchableOpacity>
                                         {
                                         stackRole === 'Manager' ? 
-                                            <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => navigation.navigate('Search Update', {item})}>
+                                            <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => {
+                                                if (isOffline) {return;}
+                                                navigation.navigate('Search Update', {item});
+                                            }}>
                                                 <Ionicons name='pencil-outline' size={20} color='white'></Ionicons>
                                             </TouchableOpacity>
                                             :
@@ -203,7 +209,10 @@ export default function Search({props, route, navigation}) {
                                         }
                                         {
                                         stackRole === 'Manager' ? 
-                                            <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => showModal(item, 'Items')}>
+                                            <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => {
+                                                if (isOffline) {return;}
+                                                showModal(item, 'Items');
+                                            }}>
                                                 <Ionicons name='trash-outline' size={20} color='white'></Ionicons>
                                             </TouchableOpacity>
                                             :
@@ -219,6 +228,8 @@ export default function Search({props, route, navigation}) {
                     </View>
                 </View>
             </ScrollView>
+            {/* Offline Toast */}
+            <OfflineToast/>
         </SafeAreaView>
     );
 }
