@@ -14,6 +14,7 @@ const lightGrey = '#E0E0E0';
 const darkGrey = '#808080';
 const danger = '#FF3030';
 const lightDanger = '#ffcccc';
+const transparentLightDanger = 'rgba(255, 204, 204, 0.75)';
 const success = '#008000';
 const transparentBlack = 'rgba(0,0,0,0.5)'
 //#endregion
@@ -644,6 +645,18 @@ export default StyleSheet.create({
     //#region Misc
     offlineToastBox: {
 
+    },
+    offlineToast: {
+        position: 'absolute',
+        bottom: 16,
+        left: 16,
+        backgroundColor: transparentLightDanger,
+        padding: 10,
+        borderLeftWidth: 4,
+        borderColor: danger,
+        borderRadius: 5,
+        maxWidth: 400,
+        boxShadow: '-4px 4px ' + transparentBlack,
     },
     //#endregion
 });

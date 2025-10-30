@@ -8,7 +8,7 @@ export default function OfflineToast() {
     return (
         <View style={Style.offlineToastBox}>
             {isOffline && (
-                <View style={Style.toast}>
+                <View style={Style.offlineToast}>
                     <Text style={[Style.toastText, Style.regularText]}>You're offline. Check your internet connection.</Text>
                 </View>
             )}
