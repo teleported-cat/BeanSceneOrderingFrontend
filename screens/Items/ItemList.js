@@ -7,15 +7,15 @@ import { Ionicons } from '@expo/vector-icons';
 import AuthHeader from '../../components/AuthHeader.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
-import { useNetInfo } from "@react-native-community/netinfo";
 import OfflineToast from '../../components/OfflineToast.js';
+import useNetworkStatus from '../../components/useNetworkStatus.js';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
 
 export default function ItemList({props, navigation}) {
 
-    const netInfo = useNetInfo();
+    const isOffline = useNetworkStatus();
     
     //#region GET methods
     const [itemData, setItemData] = useState([]);
@@ -150,10 +150,16 @@ export default function ItemList({props, navigation}) {
                                         <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => navigation.navigate('View Item', {item})}>
                                             <Ionicons name='eye-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => navigation.navigate('Update Item', {item})}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => {
+                                            if (isOffline) {return;}
+                                            navigation.navigate('Update Item', {item});
+                                            }}>
                                             <Ionicons name='pencil-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => showModal(item, 'Items')}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => {
+                                            if (isOffline) {return;}
+                                            showModal(item, 'Items');
+                                        }}>
                                             <Ionicons name='trash-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
                                     </View>
@@ -161,7 +167,10 @@ export default function ItemList({props, navigation}) {
                             );
                         })}
                         <View style={Style.listAddBox}>
-                            <TouchableOpacity style={Style.listAdd} onPress={() => navigation.navigate('Add Item')}>
+                            <TouchableOpacity style={Style.listAdd} onPress={() => {
+                                if (isOffline) {return;}
+                                navigation.navigate('Add Item');
+                                }}>
                                 <Ionicons name='add-circle-outline' size={20} color='white'></Ionicons>
                                 <Text style={[Style.listAddText, Style.regularText]}>Add New Item</Text>
                             </TouchableOpacity>
@@ -180,7 +189,10 @@ export default function ItemList({props, navigation}) {
                                 <View key={index} style={Style.itemContainer}>
                                     <Text style={[Style.categoryText, Style.regularText]}>{item.name}</Text>
                                     <View style={Style.listActions}>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => showModal(item, 'Category')}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => {
+                                            if (isOffline) {return;}
+                                            showModal(item, 'Category');
+                                            }}>
                                             <Ionicons name='trash-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
                                     </View>
@@ -188,7 +200,10 @@ export default function ItemList({props, navigation}) {
                             );
                         })}
                         <View style={Style.listAddBox}>
-                            <TouchableOpacity style={Style.listAdd} onPress={() => navigation.navigate('Add Category')}>
+                            <TouchableOpacity style={Style.listAdd} onPress={() => {
+                                if (isOffline) {return;}
+                                navigation.navigate('Add Category');
+                                }}>
                                 <Ionicons name='add-circle-outline' size={20} color='white'></Ionicons>
                                 <Text style={[Style.listAddText, Style.regularText]}>Add New Category</Text>
                             </TouchableOpacity>
