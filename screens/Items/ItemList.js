@@ -9,6 +9,7 @@ import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
 import OfflineToast from '../../components/OfflineToast.js';
 import useNetworkStatus from '../../components/useNetworkStatus.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
@@ -24,6 +25,19 @@ export default function ItemList({props, navigation}) {
     const isFocused = useIsFocused();
 
     const getItems = async () => {
+        // Get from async storage
+        if (isOffline) {
+            const storageData = await AsyncStorage.getItem('ItemCollection');
+            if (storageData !== null) {
+                const parsedData = JSON.parse(storageData);
+                setItemData(parsedData);
+            } else {
+                console.log("Async-Storage Error: No stored collection!")
+            }
+            return;
+        }
+
+        // Get from API
         var url = API_BASE_URL + "/Items";
         var header = new Headers({});
         var options = {
@@ -31,16 +45,38 @@ export default function ItemList({props, navigation}) {
             headers: header,
         };
 
+        let data;
+
         try {
             const response = await fetch(url, options);
-            const data = await response.json();
+            data = await response.json();
             setItemData(data);
         } catch (error) {
             console.log("GET Items failed: " + error.message);
+            return;
+        }
+
+        // Set async storage
+        try {
+            await AsyncStorage.setItem('ItemCollection', JSON.stringify(data));
+        } catch (error) {
+            console.log("Async-Storage Error: " + error);
         }
     };
 
     const getCategories = async () => {
+        // Get from async storage
+        if (isOffline) {
+            const storageData = await AsyncStorage.getItem('CategoryCollection');
+            if (storageData !== null) {
+                const parsedData = JSON.parse(storageData);
+                setCategoryData(parsedData);
+            } else {
+                console.log("Async-Storage Error: No stored collection!")
+            }
+            return;
+        }
+
         var url = API_BASE_URL + "/Category";
         var header = new Headers({});
         var options = {
@@ -48,21 +84,31 @@ export default function ItemList({props, navigation}) {
             headers: header,
         };
 
+        let data;
+
         try {
             const response = await fetch(url, options);
-            const data = await response.json();
+            data = await response.json();
             setCategoryData(data);
         } catch (error) {
             console.log("GET Categories failed: " + error.message);
         }
+
+        // Set async storage
+        try {
+            await AsyncStorage.setItem('CategoryCollection', JSON.stringify(data));
+        } catch (error) {
+            console.log("Async-Storage Error: " + error);
+        }
     };
 
     useEffect(() => {
-        if (isFocused) {
+        console.log(isOffline);
+        if (isFocused && isOffline !== null) {
             getItems();
             getCategories();
         }
-    }, [props, isFocused])
+    }, [props, isFocused, isOffline])
     //#endregion
     //#region DELETE methods
     const [modalVisible, setModalVisible] = useState(false);
@@ -143,7 +189,7 @@ export default function ItemList({props, navigation}) {
                                         <View style={Style.itemInfo}>
                                             <Text style={[Style.itemText, Style.regularText]}>{item.name}</Text>
                                             <Text style={[Style.itemText, Style.itemCategoryText, Style.regularText]}>{item.categoryName}</Text>
-                                            <Text style={[Style.itemText, Style.boldText]}>${item.price.toFixed(2)}</Text>
+                                            <Text style={[Style.itemText, Style.boldText]}>${Number(item.price).toFixed(2)}</Text>
                                         </View>
                                     </View>
                                     <View style={Style.listActions}>
