@@ -8,6 +8,7 @@ import AuthHeader from '../../components/AuthHeader.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
 import useNetworkStatus from '../../components/useNetworkStatus.js';
 import OfflineToast from '../../components/OfflineToast.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
@@ -20,6 +21,18 @@ export default function StaffList({props, navigation}) {
     const isFocused = useIsFocused();
     
     const getStaff = async () => {
+        // Get from async storage
+        if (isOffline) {
+            const storageData = await AsyncStorage.getItem('StaffCollection');
+            if (storageData !== null) {
+                const parsedData = JSON.parse(storageData);
+                setStaffData(parsedData);
+            } else {
+                console.log("Async-Storage Error: No stored collection!")
+            }
+            return;
+        }
+
         var url = API_BASE_URL + "/Staff";
         var header = new Headers({});
         var options = {
@@ -27,20 +40,29 @@ export default function StaffList({props, navigation}) {
             headers: header,
         };
 
+        let data;
+
         try {
             const response = await fetch(url, options);
-            const data = await response.json();
+            data = await response.json();
             setStaffData(data);
         } catch (error) {
             console.log("GET Staff failed: " + error.message);
         }
+
+        // Set async storage
+        try {
+            await AsyncStorage.setItem('StaffCollection', JSON.stringify(data));
+        } catch (error) {
+            console.log("Async-Storage Error: " + error);
+        }
     };
 
     useEffect(() => {
-        if (isFocused) {
+        if (isFocused && isOffline !== null) {
             getStaff();
         }
-    }, [props, isFocused])
+    }, [props, isFocused, isOffline])
     //#endregion
     //#region DELETE methods
     const [modalVisible, setModalVisible] = useState(false);
@@ -116,10 +138,16 @@ export default function StaffList({props, navigation}) {
                                         </View>
                                     </View>
                                     <View style={Style.listActions}>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => navigation.navigate('Update Staff', {item})}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => {
+                                            if (isOffline) {return;}
+                                            navigation.navigate('Update Staff', {item});
+                                        }}>
                                             <Ionicons name='pencil-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => showModal(item)}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionDelete]} onPress={() => {
+                                            if (isOffline) {return;}
+                                            showModal(item);
+                                        }}>
                                             <Ionicons name='trash-outline' size={20} color='white'></Ionicons>
                                         </TouchableOpacity>
                                     </View>
@@ -127,7 +155,10 @@ export default function StaffList({props, navigation}) {
                             );
                         })}
                         <View style={Style.listAddBox}>
-                            <TouchableOpacity style={Style.listAdd} onPress={() => navigation.navigate('Add Staff')}>
+                            <TouchableOpacity style={Style.listAdd} onPress={() => {
+                                if (isOffline) {return;}
+                                navigation.navigate('Add Staff');
+                            }}>
                                 <Ionicons name='add-circle-outline' size={20} color='white'></Ionicons>
                                 <Text style={[Style.listAddText, Style.regularText]}>Add New Account</Text>
                             </TouchableOpacity>

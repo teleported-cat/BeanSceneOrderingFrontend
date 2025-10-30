@@ -9,6 +9,7 @@ import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
 import useNetworkStatus from '../../components/useNetworkStatus.js';
 import OfflineToast from '../../components/OfflineToast.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
@@ -21,6 +22,20 @@ export default function OrderList({props, navigation}) {
     const isFocused = useIsFocused();
 
     const getOrders = async () => {
+        // Get from async storage
+        if (isOffline) {
+            console.log("offline!")
+            const storageData = await AsyncStorage.getItem('OrderCollection');
+            if (storageData !== null) {
+                const parsedData = JSON.parse(storageData);
+                setOrderData(parsedData);
+            } else {
+                console.log("Async-Storage Error: No stored collection!")
+            }
+            return;
+        }
+
+        console.log("online!")
         var url = API_BASE_URL + "/Orders";
         var header = new Headers({});
         var options = {
@@ -28,20 +43,29 @@ export default function OrderList({props, navigation}) {
             headers: header,
         };
 
+        let data;
+
         try {
             const response = await fetch(url, options);
-            const data = await response.json();
+            data = await response.json();
             setOrderData(data);
         } catch (error) {
             console.log("GET Orders failed: " + error.message);
         }
+
+        // Set async storage
+        try {
+            await AsyncStorage.setItem('OrderCollection', JSON.stringify(data));
+        } catch (error) {
+            console.log("Async-Storage Error: " + error);
+        }
     };
 
     useEffect(() => {
-        if (isFocused) {
+        if (isFocused && isOffline !== null) {
             getOrders();
         }
-    }, [props, isFocused])
+    }, [props, isFocused, isOffline])
     //#endregion
     //#region Status
     const [editOrderId, setEditOrderId] = useState(null);

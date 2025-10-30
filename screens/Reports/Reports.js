@@ -10,6 +10,7 @@ import ImageFallback from '../../components/ImageFallback.js';
 import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from "react-native-chart-kit";
 import useNetworkStatus from '../../components/useNetworkStatus.js';
 import OfflineToast from '../../components/OfflineToast.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
@@ -62,47 +63,6 @@ export default function Reports({props}) {
 
     const screenWidth = Dimensions.get("window").width;
 
-    const dummyOrderComposition = [
-        {
-            name: "Pending",
-            orders: 1,
-            color: '#4AA1B5',
-            legendFontColor: "#000000",
-            legendFontSize: 16,
-        },
-        {
-            name: "In Progress",
-            orders: 4,
-            color: '#083944',
-            legendFontColor: "#000000",
-            legendFontSize: 16,
-        },
-        {
-            name: "Completed",
-            orders: 12,
-            color: '#008000',
-            legendFontColor: "#000000",
-            legendFontSize: 16,
-        },
-        {
-            name: "Cancelled",
-            orders: 7,
-            color: '#FF3030',
-            legendFontColor: "#000000",
-            legendFontSize: 16,
-            
-        },
-    ];
-
-    const dummyOrderActivity = {
-        labels: ['18/10','19/10','20/10','21/10','22/10','23/10','24/10'],
-        datasets: [
-            {
-                data: [20, 45, 28, 80, 99, 43, 54]
-            }
-        ]
-    };
-
     const orderCompositionConfig = {
         backgroundGradientFrom: "rgba(255, 255, 255, 0)",
         backgroundGradientTo: "rgba(255, 255, 255, 0)",
@@ -124,6 +84,20 @@ export default function Reports({props}) {
     };
 
     const getOrders = async () => {
+        // Get from async storage
+        if (isOffline) {
+            const storageData = await AsyncStorage.getItem('OrderCollection');
+            if (storageData !== null) {
+                const parsedData = JSON.parse(storageData);
+                retrieveCompositionData(parsedData);
+                retrieveActivityData(parsedData);
+                setOrderData(parsedData);
+            } else {
+                console.log("Async-Storage Error: No stored collection!")
+            }
+            return;
+        }
+
         var url = API_BASE_URL + "/Orders";
         var header = new Headers({});
         var options = {
@@ -131,15 +105,24 @@ export default function Reports({props}) {
             headers: header,
         };
 
+        let data;
+
         try {
             const response = await fetch(url, options);
-            const data = await response.json();
+            data = await response.json();
             console.log(data);
             retrieveCompositionData(data);
             retrieveActivityData(data);
             setOrderData(data);
         } catch (error) {
             console.log("GET Orders failed: " + error.message);
+        }
+
+        // Set async storage
+        try {
+            await AsyncStorage.setItem('OrderCollection', JSON.stringify(data));
+        } catch (error) {
+            console.log("Async-Storage Error: " + error);
         }
     };
 
@@ -228,10 +211,10 @@ export default function Reports({props}) {
     };
 
     useEffect(() => {
-        if (isFocused) {
+        if (isFocused && isOffline !== null) {
             getOrders();
         }
-    }, [props, isFocused])
+    }, [props, isFocused, isOffline])
 
     return(
         <SafeAreaView style={[Style.center, Style.background]}>

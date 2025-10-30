@@ -9,6 +9,7 @@ import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
 import useNetworkStatus from '../../components/useNetworkStatus.js';
 import OfflineToast from '../../components/OfflineToast.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
@@ -28,24 +29,61 @@ export default function Search({props, route, navigation}) {
     const isFocused = useIsFocused();
 
     const getItems = async () => {
+        // Get from async storage
+        if (isOffline) {
+            console.log('getting items offline')
+            const storageData = await AsyncStorage.getItem('ItemCollection');
+            if (storageData !== null) {
+                const parsedData = JSON.parse(storageData);
+                console.log(parsedData)
+                setItemData(parsedData);
+                setQueriedData(parsedData);
+            } else {
+                console.log("Async-Storage Error: No stored collection!")
+            }
+            return;
+        }
+
+        console.log('getting items online')
         var url = API_BASE_URL + "/Items";
         var header = new Headers({});
         var options = {
             method: "GET",
             headers: header,
         };
+
+        let data;
     
         try {
             const response = await fetch(url, options);
-            const data = await response.json();
+            data = await response.json();
             setItemData(data);
             setQueriedData(data);
         } catch (error) {
             console.log("GET Items failed: " + error.message);
         }
+
+        // Set async storage
+        try {
+            await AsyncStorage.setItem('ItemCollection', JSON.stringify(data));
+        } catch (error) {
+            console.log("Async-Storage Error: " + error);
+        }
     };
 
     const getCategories = async () => {
+        // Get from async storage
+        if (isOffline) {
+            const storageData = await AsyncStorage.getItem('CategoryCollection');
+            if (storageData !== null) {
+                const parsedData = JSON.parse(storageData);
+                setCategoryData(parsedData);
+            } else {
+                console.log("Async-Storage Error: No stored collection!")
+            }
+            return;
+        }
+
         var url = API_BASE_URL + "/Category";
         var header = new Headers({});
         var options = {
@@ -53,12 +91,21 @@ export default function Search({props, route, navigation}) {
             headers: header,
         };
 
+        let data;
+
         try {
             const response = await fetch(url, options);
-            const data = await response.json();
+            data = await response.json();
             setCategoryData(data);
         } catch (error) {
             console.log("GET Categories failed: " + error.message);
+        }
+
+        // Set async storage
+        try {
+            await AsyncStorage.setItem('CategoryCollection', JSON.stringify(data));
+        } catch (error) {
+            console.log("Async-Storage Error: " + error);
         }
     };
 
@@ -81,11 +128,11 @@ export default function Search({props, route, navigation}) {
     };
 
     useEffect(() => {
-        if (isFocused) {
+        if (isFocused && isOffline !== null) {
             getItems();
             getCategories();
         }
-    }, [props, isFocused])
+    }, [props, isFocused, isOffline])
     //#endregion
     //#region DELETE methods
     const [modalVisible, setModalVisible] = useState(false);
