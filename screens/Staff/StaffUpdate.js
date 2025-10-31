@@ -21,7 +21,6 @@ export default function StaffUpdate({props, route, navigation}) {
     const [lastName, setLastName] = useState(staffObject.lastName);
     const [username, setUsername] = useState(staffObject.username);
     const [email, setEmail] = useState(staffObject.email);
-    const [password, setPassword] = useState(staffObject.passwordHash);
     const [role, setRole] = useState(staffObject.role);
     
     const [message, setMessage] = useState('');
@@ -55,11 +54,6 @@ export default function StaffUpdate({props, route, navigation}) {
             setMessage("Email address is invalid, double check it's spelt correctly.");
             return;
         }
-        if (isBlank(password)) {
-            setMessageStyle(Style.formMessageFailure);
-            setMessage("Password is required.");
-            return;
-        }
         if (isBlank(role)) {
             setMessageStyle(Style.formMessageFailure);
             setMessage("Role is required.");
@@ -73,7 +67,6 @@ export default function StaffUpdate({props, route, navigation}) {
             lastname: lastName,
             username: username,
             email: email,
-            passwordhash: password,
             role: role,
         };
 
@@ -132,10 +125,6 @@ export default function StaffUpdate({props, route, navigation}) {
                         <View style={Style.formField}>
                             <Text style={[Style.formFieldText, Style.regularText]}>Email</Text>
                             <TextInput style={[Style.formFieldInput, Style.regularText]} value={email} onChangeText={(email) => setEmail(email)}></TextInput>
-                        </View>
-                        <View style={Style.formField}>
-                            <Text style={[Style.formFieldText, Style.regularText]}>Password</Text>
-                            <TextInput style={[Style.formFieldInput, Style.regularText]} value={password} onChangeText={(password) => setPassword(password)}></TextInput>
                         </View>
                         <View style={Style.formField}>
                             <Text style={[Style.formFieldText, Style.regularText]}>Role</Text>

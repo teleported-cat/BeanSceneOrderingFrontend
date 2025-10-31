@@ -27,6 +27,7 @@ import CategoryAdd from './screens/Items/CategoryAdd.js';
 import StaffList from './screens/Staff/StaffList.js';
 import StaffAdd from './screens/Staff/StaffAdd.js';
 import StaffUpdate from './screens/Staff/StaffUpdate.js';
+import StaffUpdatePassword from './screens/Staff/StaffUpdatePassword.js';
 
 import OrderList from './screens/Orders/OrderList.js';
 import OrderView from './screens/Orders/OrderView.js';
@@ -145,6 +146,7 @@ function StaffNavigator() {
       <Stack.Screen name='Staff List' component={StaffList} />
       <Stack.Screen name='Add Staff' component={StaffAdd} />
       <Stack.Screen name='Update Staff' component={StaffUpdate} />
+      <Stack.Screen name='Update Staff Password' component={StaffUpdatePassword} />
     </Stack.Navigator>
   );
 }

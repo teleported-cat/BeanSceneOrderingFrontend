@@ -138,6 +138,12 @@ export default function StaffList({props, navigation}) {
                                         </View>
                                     </View>
                                     <View style={Style.listActions}>
+                                        <TouchableOpacity style={[Style.actionButton, Style.actionView]} onPress={() => {
+                                            if (isOffline) {return;}
+                                            navigation.navigate('Update Staff Password', {item});
+                                        }}>
+                                            <Ionicons name='key-outline' size={20} color='white'></Ionicons>
+                                        </TouchableOpacity>
                                         <TouchableOpacity style={[Style.actionButton, Style.actionEdit]} onPress={() => {
                                             if (isOffline) {return;}
                                             navigation.navigate('Update Staff', {item});
