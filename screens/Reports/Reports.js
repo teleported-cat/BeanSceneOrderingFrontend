@@ -100,6 +100,12 @@ export default function Reports({props}) {
 
         var url = API_BASE_URL + "/Orders";
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         var options = {
             method: "GET",
             headers: header,
