@@ -35,6 +35,12 @@ export default function StaffList({props, navigation}) {
 
         var url = API_BASE_URL + "/Staff";
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         var options = {
             method: "GET",
             headers: header,
@@ -81,6 +87,12 @@ export default function StaffList({props, navigation}) {
     const confirmDelete = async () => {
         var url = `${API_BASE_URL}/Staff/${selectedStaff._id}`;
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         header.append('Content-Type', "application/json");
         var options = {
             method: "DELETE",

@@ -9,6 +9,7 @@ import { useNavigationState } from '@react-navigation/native';
 import BackButton from '../../components/BackButton.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
 import { isNumber, isPositiveNumber, isBlank, validateEmail } from '../../components/PostValidationMethods.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
@@ -76,6 +77,12 @@ export default function StaffAdd({props, navigation}) {
         // Send request
         var url = API_BASE_URL + "/Staff";
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         header.append('Content-Type', "application/json");
         var options = {
             method: "POST",
