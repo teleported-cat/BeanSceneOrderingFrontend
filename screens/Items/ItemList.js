@@ -40,10 +40,17 @@ export default function ItemList({props, navigation}) {
         // Get from API
         var url = API_BASE_URL + "/Items";
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         var options = {
             method: "GET",
             headers: header,
         };
+        console.log(options);
 
         let data;
 
@@ -79,6 +86,12 @@ export default function ItemList({props, navigation}) {
 
         var url = API_BASE_URL + "/Category";
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         var options = {
             method: "GET",
             headers: header,
@@ -130,6 +143,12 @@ export default function ItemList({props, navigation}) {
     const confirmDelete = async () => {
         var url = `${API_BASE_URL}/${objectType}/${selectedObject._id}`;
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         header.append('Content-Type', "application/json");
         var options = {
             method: "DELETE",
