@@ -38,6 +38,12 @@ export default function OrderList({props, navigation}) {
         console.log("online!")
         var url = API_BASE_URL + "/Orders";
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         var options = {
             method: "GET",
             headers: header,
@@ -74,6 +80,12 @@ export default function OrderList({props, navigation}) {
     const updateOrderStatus = async (orderId, newStatus) => {
         var url = `${API_BASE_URL}/Orders/${orderId}/Status`;
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         header.append('Content-Type', "application/json");
         var options = {
             method: "PUT",

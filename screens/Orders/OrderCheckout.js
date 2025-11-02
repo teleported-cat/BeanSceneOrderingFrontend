@@ -8,6 +8,7 @@ import AuthHeader from '../../components/AuthHeader.js';
 import { API_BASE_URL } from '../../components/APIAddress.js';
 import ImageFallback from '../../components/ImageFallback.js';
 import { isBlank } from '../../components/PostValidationMethods.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 {/* Stylesheet */}
 import Style from '../../styles/Style.js';
@@ -122,6 +123,12 @@ export default function OrderCheckout({props, route, navigation}) {
         // Begin request
         var url = `${API_BASE_URL}/Orders/`;
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         header.append('Content-Type', "application/json");
         var options = {
             method: "POST",
@@ -161,6 +168,12 @@ export default function OrderCheckout({props, route, navigation}) {
     const getItems = async () => {
         var url = API_BASE_URL + "/Items";
         var header = new Headers({});
+
+        // Get user details for auth
+        const rawUser = await AsyncStorage.getItem('CurrentUser');
+        const authUser = JSON.parse(rawUser); 
+        header.append('Authorization', 'Basic ' + btoa(`${authUser.username}:${authUser.password}`));
+
         var options = {
             method: "GET",
             headers: header,
