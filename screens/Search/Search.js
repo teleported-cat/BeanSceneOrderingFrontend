@@ -123,18 +123,12 @@ export default function Search({props, route, navigation}) {
 
     // Using the search bar query & category filter, produce an array containing elements that satisfy those conditions
     const updateQuery = (newQuery, newFilter) => {
-        let newItems = [];
         const trimmedQuery = newQuery.trim().toLowerCase();
 
-        // Loop through each item and add each item with conditions
-        for (let i = 0; i < itemData.length; i++) {
-            const itemName = itemData[i].name.toLowerCase();
-            if (itemName.includes(trimmedQuery)) {
-                if (newFilter === '' || itemData[i].categoryName === newFilter) {
-                    newItems.push(itemData[i]);
-                }
-            }
-        }
+        const newItems = itemData.filter(item => {
+            const itemName = item.name.toLowerCase();
+            return itemName.includes(trimmedQuery) && (newFilter === '' || item.categoryName === newFilter);
+        });
 
         setQueriedData(newItems);
     };
