@@ -80,7 +80,7 @@ export default function OrderView({props, route, navigation}) {
                     <View style={Style.orderViewDetails}>
                         <View style={Style.orderViewInfo}>
                             <Text style={[Style.orderViewLabel, Style.boldText]}>Table No.</Text>
-                            <Text style={[Style.orderViewText, Style.regularText]}>{orderObject.tableNo}</Text>
+                            <Text style={[Style.orderViewText, Style.regularText]}>{orderObject.tableno}</Text>
                         </View>
                         <View style={Style.orderViewInfo}>
                             <Text style={[Style.orderViewLabel, Style.boldText]}>Order Name</Text>
