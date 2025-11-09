@@ -39,3 +39,6 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# mongodb query playground
+playground-1.mongodb.js
